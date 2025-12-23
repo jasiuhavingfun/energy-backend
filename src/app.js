@@ -3,8 +3,14 @@ import cors from "cors";
 import energyMixRoutes from "./routes/energyMix.routes.js";
 import chargingWindowRoutes from "./routes/chargingWindow.routes.js";
 
-
 const app = express();
+
+const allowedOrigin = process.env.FRONTEND_URL;
+app.use(cors({
+  origin: allowedOrigin,
+  credentials: true
+}));
+
 app.use(express.json());
 
 app.use("/energy-mix", energyMixRoutes);
@@ -19,10 +25,3 @@ const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-
-const allowedOrigin = process.env.FRONTEND_URL;
-
-app.use(cors({
-  origin: allowedOrigin,
-  credentials: true
-}));
